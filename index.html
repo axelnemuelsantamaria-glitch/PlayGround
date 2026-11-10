@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+  <meta name="theme-color" content="#07111d">
+  <link rel="icon" href="data:,">
+  <title>NOVA STRIKE — Arcade FPS</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="game-shell">
+    <canvas id="game" aria-label="Juego de disparos 3D"></canvas>
+    <div class="scanlines" aria-hidden="true"></div>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Nova Strike inicio"><span class="brand-mark">N</span><span>NOVA<span class="brand-light">STRIKE</span><small>ARCADE DIVISION</small></span></a>
+      <div class="top-status"><span class="live-dot"></span> SISTEMA ONLINE <span class="divider">/</span> <span id="top-map">SECTOR 07</span></div>
+      <button id="sound-btn" class="icon-btn" aria-label="Activar o desactivar sonido">♫ <span>SONIDO</span></button>
+    </header>
+
+    <section id="menu" class="screen menu-screen">
+      <div class="menu-content">
+        <p class="eyebrow"><span class="eyebrow-line"></span> COMBATE DE NUEVA GENERACIÓN</p>
+        <h1>ENTRA EN<br><span>LA ZONA.</span></h1>
+        <p class="intro">Tres sectores. Tres desafíos. Sobrevive y demuestra que eres la última línea de defensa.</p>
+        <div class="menu-section-title"><span>01</span> ELIGE TU OPERACIÓN</div>
+        <div class="mode-grid" role="group" aria-label="Modo de juego">
+          <button class="mode-card selected" data-mode="survival"><span class="mode-icon">◈</span><span class="mode-name">SUPERVIVENCIA</span><span class="mode-desc">Aguanta las oleadas</span><span class="mode-tag">SIN LÍMITE</span></button>
+          <button class="mode-card" data-mode="rush"><span class="mode-icon">⌁</span><span class="mode-name">CONTRARRELOJ</span><span class="mode-desc">Máximo puntos en 60s</span><span class="mode-tag">60 SEG</span></button>
+          <button class="mode-card" data-mode="precision"><span class="mode-icon">◎</span><span class="mode-name">TIRO DE ÉLITE</span><span class="mode-desc">Elimina 12 objetivos</span><span class="mode-tag">12 BLANCOS</span></button>
+        </div>
+        <div class="menu-section-title map-title"><span>02</span> SELECCIONA SECTOR</div>
+        <div class="map-grid" role="group" aria-label="Mapa">
+          <button class="map-card selected" data-map="neon"><span class="map-preview neon-preview"><i></i><i></i><i></i></span><span class="map-name">NEON DISTRICT</span><span class="map-sub">CIUDAD // NOCHE</span><span class="map-check">✓</span></button>
+          <button class="map-card" data-map="dune"><span class="map-preview dune-preview"><i></i><i></i><i></i></span><span class="map-name">DUNE OUTPOST</span><span class="map-sub">DESIERTO // 38°C</span><span class="map-check">✓</span></button>
+          <button class="map-card" data-map="frost"><span class="map-preview frost-preview"><i></i><i></i><i></i></span><span class="map-name">FROST LAB</span><span class="map-sub">ÁRTICO // -20°C</span><span class="map-check">✓</span></button>
+        </div>
+        <button id="start-btn" class="start-btn"><span>INICIAR OPERACIÓN</span><b>→</b></button>
+        <p class="controls-hint"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> MOVER <span>·</span> <kbd>←</kbd><kbd>→</kbd> GIRAR <span>·</span> <kbd>ESPACIO</kbd> DISPARAR</p>
+      </div>
+      <aside class="menu-side"><div class="side-orbit orbit-one"></div><div class="side-orbit orbit-two"></div><div class="side-core">N<span>✦</span></div><div class="side-label">NOVA<br>COMBAT<br><span>SIMULATION</span></div><div class="side-coords">34° 03' 08.4" N<br>118° 14' 37.2" W</div></aside>
+    </section>
+
+    <section id="hud" class="hud hidden">
+      <div class="hud-left"><div class="hud-label">OPERACIÓN</div><div id="hud-map" class="hud-map">NEON DISTRICT</div><div class="wave-box"><span>OLEADA</span><b id="wave">01</b></div></div>
+      <div class="hud-center"><div id="objective" class="objective">ELIMINA A LOS HOSTILES</div><div id="timer" class="timer hidden">01:00</div><div class="crosshair"><i></i><i></i><i></i><i></i><b></b></div><div id="hit-marker" class="hit-marker">✕</div><div id="toast" class="toast"></div></div>
+      <div class="hud-right"><div class="score-label">PUNTUACIÓN</div><div id="score" class="score">000000</div><div class="health-row"><span>INTEGRIDAD</span><div class="health-track"><i id="health-fill"></i></div><b id="health-value">100</b></div><div class="ammo"><span id="ammo">12</span><small>/ 60</small><span class="ammo-label">MUNICIÓN</span></div></div>
+      <button id="pause-btn" class="pause-btn" aria-label="Pausa">Ⅱ</button>
+      <div class="mobile-controls"><div id="joystick" class="joystick"><div class="joy-knob"></div></div><button id="mobile-fire" class="fire-btn"><span>◎</span><small>FUEGO</small></button><button id="mobile-reload" class="reload-btn">↻</button></div>
+      <div class="reload-note">R RECARGAR</div>
+    </section>
+
+    <section id="pause-screen" class="screen modal-screen hidden"><div class="modal-card"><p class="eyebrow">NOVA STRIKE // PAUSA</p><h2>REAGRUPARSE.</h2><p>El sector espera. Tómate un segundo.</p><button id="resume-btn" class="start-btn"><span>VOLVER AL COMBATE</span><b>→</b></button><button id="quit-btn" class="text-btn">ABANDONAR OPERACIÓN</button></div></section>
+    <section id="result-screen" class="screen modal-screen hidden"><div class="modal-card"><p id="result-kicker" class="eyebrow">INFORME DE MISIÓN</p><h2 id="result-title">SECTOR ASEGURADO.</h2><p id="result-copy">Buen trabajo, agente.</p><div class="result-stats"><div><span>PUNTUACIÓN</span><b id="final-score">000000</b></div><div><span>ELIMINACIONES</span><b id="final-kills">00</b></div><div><span>PRECISIÓN</span><b id="final-accuracy">0%</b></div></div><button id="again-btn" class="start-btn"><span>JUGAR DE NUEVO</span><b>↻</b></button><button id="menu-btn" class="text-btn">VOLVER AL MENÚ</button></div></section>
+    <div id="flash" class="damage-flash"></div>
+    <div id="orientation-tip" class="orientation-tip">GIRA TU DISPOSITIVO PARA UNA MEJOR EXPERIENCIA</div>
+    <footer class="footer"><span>NS // 2049</span><span>ENTRENAMIENTO DE COMBATE · BUILD 1.0</span><span id="fps-label">FPS 60</span></footer>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
